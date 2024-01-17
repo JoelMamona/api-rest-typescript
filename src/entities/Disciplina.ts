@@ -1,6 +1,7 @@
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Aluno } from "./Aluno";
 import { Professor } from "./Professor";
+import { IsNotEmpty, IsString } from "class-validator";
 
 @Entity('disciplinas')
 export class Disciplina {
@@ -8,10 +9,14 @@ export class Disciplina {
     @PrimaryGeneratedColumn()
     id:number
 
-    @Column({type:'varchar'})
+    @Column()
+    @IsNotEmpty({message: 'O campo nome é obrigatório'})
+    @IsString({message: 'O campo nome é do tipo String'})
     nome: string
 
-    @Column({type:'varchar', nullable:true})
+    @Column()
+    @IsNotEmpty({message: 'O campo descricao é obrigatório'})
+    @IsString({message: 'O campo descricao é do tipo String'})
     descricao: string
 
     @ManyToMany(() => Aluno, aluno => aluno.disciplinas)
